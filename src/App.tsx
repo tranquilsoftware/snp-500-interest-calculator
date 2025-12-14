@@ -478,11 +478,10 @@ const BigPictureCard: React.FC<{
 const InsightsCard: React.FC<{ 
   metrics: InvestmentMetrics; 
   finalMonth: MonthData | undefined;
-  projections: MonthData[];
   initialInvestment: number;
   monthlyContribution: number;
   years: number;
-}> = ({ metrics, finalMonth, projections, initialInvestment, monthlyContribution, years }) => {
+}> = ({ metrics, finalMonth, initialInvestment, monthlyContribution, years }) => {
   const insights = [];
   
   // Early start advantage
@@ -918,7 +917,7 @@ const InvestmentCalculator: React.FC = () => {
               </h3>
               <div className="h-[400px] -mx-2 pr-2">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={projections.filter((d, i) => i % 6 === 0)}>
+                  <AreaChart data={projections.filter((_, i) => i % 6 === 0)}>
                     <defs>
                       <linearGradient id="colorBalance" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8}/>
@@ -997,7 +996,7 @@ const InvestmentCalculator: React.FC = () => {
               </h3>
               <div className="h-[400px] -mx-2 pr-2">
                 <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={projections.filter((d, i) => i % 6 === 0)}>
+                  <LineChart data={projections.filter((_, i) => i % 6 === 0)}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#2d3748" />
                     <XAxis 
                       dataKey="year" 
@@ -1066,7 +1065,7 @@ const InvestmentCalculator: React.FC = () => {
               </h3>
               <div className="h-[400px] -mx-2 pr-2">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={projections.filter((d, i) => i % 6 === 0)}>
+                  <AreaChart data={projections.filter((_, i) => i % 6 === 0)}>
                     <defs>
                       <linearGradient id="colorBest" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
@@ -1144,7 +1143,6 @@ const InvestmentCalculator: React.FC = () => {
             <InsightsCard 
               metrics={metrics} 
               finalMonth={finalMonth} 
-              projections={projections}
               initialInvestment={state.mode === 'investment' ? (state.initialInvestment || 0) : calculateRequiredInvestment(
                 ((state.targetMonthlyIncome || 0) * 12) / 0.04,
                 state.monthlyContribution || 0,
